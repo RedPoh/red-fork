@@ -17,6 +17,7 @@ def tokenize(text: str) -> list:
                     level += 1
                 else:
                     break
+            level = min(level, 6)
             content = block[level:].strip()
             tokens.append({"type": "header", "level": level, "content": content})
         else:
