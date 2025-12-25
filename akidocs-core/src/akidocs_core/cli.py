@@ -14,7 +14,7 @@ def main():
     output_path = Path(sys.argv[2])
 
     if not input_path.exists():
-        print(f"Error: Fine not found: {input_path}")
+        print(f"Error: File not found: {input_path}")
         sys.exit(1)
     text = input_path.read_text(encoding="utf-8")
     tokens = tokenize(text)
