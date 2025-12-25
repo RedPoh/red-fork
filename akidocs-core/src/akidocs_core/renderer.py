@@ -14,7 +14,7 @@ def render_pdf(tokens: list) -> bytes:
             pdf.set_font("Times", style="B", size=size)
             pdf.multi_cell(0, size * 0.5, token.content)
             pdf.ln(4)
-        elif isinstance(token, Header):
+        elif isinstance(token, Paragraph):
             pdf.set_font("Times", size=12)
             pdf.multi_cell(0, 6, token.content)
             pdf.ln(2)
