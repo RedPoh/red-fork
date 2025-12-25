@@ -1,2 +1,4 @@
 def tokenize(text: str) -> list:
-    return []
+    if text == "":
+        return []
+    return [{"type": "paragraph", "content": text}]
