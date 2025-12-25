@@ -11,8 +11,14 @@ def tokenize(text: str) -> list:
             continue
 
         if block.startswith("#"):
-            content = block.lstrip("#").strip()
-            tokens.append({"type": "header", "level": 1, "content": content})
+            level = 0
+            for char in block:
+                if char == "#":
+                    level += 1
+                else:
+                    break
+            content = block[level:].strip()
+            tokens.append({"type": "header", "level": level, "content": content})
         else:
             tokens.append({"type": "paragraph", "content": block})
 
