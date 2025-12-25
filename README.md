@@ -1,10 +1,31 @@
-# AkiDocs
+# Akidocs
+Akidocs converts Markdown files to PDF. Part of a larger personal project with the goal of exploring documentation tooling. Currently very minimal.
 
-Markdown to PDF converter. This project is in very early development.
+⚠️ **Alpha software** ⚠️ - This is currently a learning project in early development. Expect frequent breaking changes, major missing features, and non-comprehensive documentation.
+
+Currently functional on **Windows 11 via PowerShell,** all instructions for PowerShell if not otherwise specified. Other platforms remain untested.
+
+## Current Features
+Takes in a Markdown file, parses it, and outputs it as a PDF
+
+- Headers (levels 1-6)
+- Paragraphs
+- Usable as a CLI tool (`aki`)
+
+## Prerequisites
+**Requires uv**, if not installed follow https://docs.astral.sh/uv/getting-started/installation/
 
 ## Install
+Akidocs is available from GitHub (https://github.com/AkiPoh/akidocs), with releases available from GitHub Releases (https://github.com/AkiPoh/akidocs/releases).
+
+### Install from GitHub Releases (Preferred)
+Go to GitHub Releases (https://github.com/AkiPoh/akidocs/releases) and follow the instructions for the most recent release.
+ 
+### Install from Source (Advanced)
+Clone the repository first, then:
+
 ```powershell
-# Move to right directory from repository root
+# Move to correct directory from repository root
 cd ./akidocs-core
 # Install Akidocs globally
 uv tool install .
@@ -17,9 +38,8 @@ aki input.md output.pdf
 ```
 
 ## Development
-
 ```powershell
-# Move to right directory from repository root
+# Move to correct directory from repository root
 cd ./akidocs-core
 # Sync dependencies from lockfile
 uv sync
