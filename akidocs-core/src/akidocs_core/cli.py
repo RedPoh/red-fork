@@ -27,6 +27,7 @@ def open_file(path):
     except subprocess.CalledProcessError as e:
         print(f"Cannot open file: command failed with exit code {e.returncode}")
         return False
+    return True
 
 
 def main():
