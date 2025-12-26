@@ -7,6 +7,47 @@ DELIMITERS: list[tuple[str, frozenset[Style]]] = [
 ]
 
 
+def _find_closing(text: str, delim: str, start: int) -> int:
+    """Find closing delimiter, skipping nested sections."""
+    i = start
+    while i < len(text):
+        # Check for our closing delimiter
+        if text[i : i + len(delim)] == delim:
+            # Only defer to longer delimiter if it can actually close
+            longer_valid = False
+            for check_delim, _ in DELIMITERS:
+                if len(check_delim) <= len(delim):
+                    continue
+                if text[i : i + len(check_delim)] != check_delim:
+                    continue
+                close = _find_closing(text, check_delim, i + len(check_delim))
+                if close != -1:
+                    longer_valid = True
+                    break
+
+            if not longer_valid:
+                return i
+
+        # Check for other delimiters to skip
+        skipped = False
+        for check_delim, _ in DELIMITERS:
+            if check_delim == delim:
+                continue
+            if text[i : i + len(check_delim)] != check_delim:
+                continue
+
+            close = _find_closing(text, check_delim, i + len(check_delim))
+            if close != -1:
+                i = close + len(check_delim)
+                skipped = True
+                break
+
+        if not skipped:
+            i += 1
+
+    return -1
+
+
 def tokenize_inline(
     text: str, inherited_styles: frozenset[Style] = frozenset()
 ) -> list[InlineText]:
@@ -21,7 +62,7 @@ def tokenize_inline(
             if text[i : i + len(delim)] != delim:
                 continue
 
-            end = text.find(delim, i + len(delim))
+            end = _find_closing(text, delim, i + len(delim))
             if end == -1:
                 break
 
