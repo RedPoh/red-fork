@@ -1,7 +1,4 @@
-from tokenize import tokenize
-
 from akidocs_core.inline_tokenizer import tokenize_inline
-
 from akidocs_core.tokens import Italic, Text
 
 
