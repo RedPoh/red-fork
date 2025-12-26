@@ -49,3 +49,20 @@ def test_bold_containing_italic():
         content="and italic", styles=frozenset({Bold(), Italic()})
     )
     assert result[2] == InlineText(content=" text", styles=frozenset({Bold()}))
+
+
+def test_italic_containing_bold():
+    result = tokenize_inline("*italic **and bold** text*")
+    assert len(result) == 3
+    assert result[0] == InlineText(content="italic ", styles=frozenset({Italic()}))
+    assert result[1] == InlineText(
+        content="and bold", styles=frozenset({Italic(), Bold()})
+    )
+    assert result[2] == InlineText(content=" text", styles=frozenset({Italic()}))
+
+
+def test_adjacent_styles():
+    result = tokenize_inline("**bold***italic*")
+    assert len(result) == 2
+    assert result[0] == InlineText(content="bold", styles=frozenset({Bold()}))
+    assert result[1] == InlineText(content="italic", styles=frozenset({Italic()}))
