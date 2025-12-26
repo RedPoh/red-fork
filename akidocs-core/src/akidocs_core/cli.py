@@ -68,7 +68,8 @@ def main():
     print(f"Written to {output_path}")
     if args.open:
         print(f"Opening {output_path}")
-        open_file(output_path)
+        if not os.environ.get("AKIDOCS_TEST_MODE"):
+            open_file(output_path)
 
 
 if __name__ == "__main__":

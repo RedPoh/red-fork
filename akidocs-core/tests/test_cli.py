@@ -1,3 +1,4 @@
+import os
 import subprocess
 from importlib.metadata import version
 from pathlib import Path
@@ -88,6 +89,7 @@ def test_cli_open_long_flag(tmp_path):
         ],
         capture_output=True,
         text=True,
+        env={**os.environ, "AKIDOCS_TEST_MODE": "1"},
     )
     assert result.returncode == 0
     assert output_file.exists()
@@ -112,6 +114,7 @@ def test_cli_open_short_flag(tmp_path):
         ],
         capture_output=True,
         text=True,
+        env={**os.environ, "AKIDOCS_TEST_MODE": "1"},
     )
     assert result.returncode == 0
     assert output_file.exists()
