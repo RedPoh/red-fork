@@ -1,5 +1,5 @@
 from akidocs_core.inline_tokenizer import tokenize_inline
-from akidocs_core.tokens import Italic, Text
+from akidocs_core.tokens import Bold, Italic, Text
 
 
 def test_plain_text():
@@ -15,3 +15,13 @@ def test_italic_only():
 def test_text_then_italic():
     result = tokenize_inline("hello *world*")
     assert result == [Text(content="hello "), Italic(content="world")]
+
+
+def test_bold_only():
+    result = tokenize_inline("**hello**")
+    assert result == [Bold(content="hello")]
+
+
+def test_text_then_bold():
+    result = tokenize_inline("hello **world**")
+    assert result == [Text(content="hello "), Bold(content="world")]
