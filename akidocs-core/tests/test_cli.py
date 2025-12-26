@@ -24,3 +24,42 @@ def test_cli_produces_pdf(tmp_path):
     assert result.returncode == 0
     assert output_file.exists()
     assert output_file.stat().st_size > 0
+
+
+def test_cli_version_long_flag():
+    result = subprocess.run(
+        ["uv", "run", "python", "-m", "akidocs_core", "--version"],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0
+    assert "akidocs-core" in result.stdout
+
+
+def test_cli_version_short_flag():
+    result = subprocess.run(
+        ["uv", "run", "python", "-m", "akidocs_core", "-v"],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0
+    assert "akidocs-core" in result.stdout
+
+
+def test_cli_help_long_flag():
+    result = subprocess.run(
+        ["uv", "run", "python", "-m", "akidocs_core", "--help"],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0
+    assert "usage" in result.stdout.lower()
+
+    def test_cli_help_short_flag():
+        result = subprocess.run(
+            ["uv", "run", "python", "-m", "akidocs_core", "-h"],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0
+        assert "usage" in result.stdout.lower()
