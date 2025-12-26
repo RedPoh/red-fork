@@ -11,16 +11,18 @@ class Italic:
     content: str
 
 
+InlineToken = Text | Italic
+
+
 @dataclass
 class Header:
     level: int
-    content: str
+    content: list[InlineToken]
 
 
 @dataclass
 class Paragraph:
-    content: str
+    content: list[InlineToken]
 
 
 Token = Header | Paragraph
-InlineToken = Text | Italic

@@ -1,3 +1,4 @@
+from akidocs_core.inline_tokenizer import tokenize_inline
 from akidocs_core.tokens import Header, Paragraph, Token
 
 
@@ -20,10 +21,10 @@ def tokenize(text: str) -> list[Token]:
             level = len(block) - len(stripped)
             if level <= 6 and (stripped == "" or stripped.startswith(" ")):
                 content = stripped.strip()
-                tokens.append(Header(level=level, content=content))
+                tokens.append(Header(level=level, content=tokenize_inline(content)))
             else:
-                tokens.append(Paragraph(content=block))
+                tokens.append(Paragraph(content=tokenize_inline(block)))
         else:
-            tokens.append(Paragraph(content=block))
+            tokens.append(Paragraph(content=tokenize_inline(block)))
 
     return tokens
