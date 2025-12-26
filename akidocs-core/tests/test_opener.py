@@ -7,7 +7,7 @@ from akidocs_core.cli import open_file
 
 def test_open_file_windows():
     with patch("akidocs_core.cli.sys.platform", "win32"):
-        with patch("akidocs_core.cli.os.startfile") as mock_startfile:
+        with patch("akidocs_core.cli.os.startfile", create=True) as mock_startfile:
             result = open_file(Path("test.pdf"))
             mock_startfile.assert_called_once_with(Path("test.pdf"))
             assert result is True
@@ -39,7 +39,9 @@ def test_open_file_unsupported_platform(capsys):
 def test_open_file_oserror(capsys):
     with patch("akidocs_core.cli.sys.platform", "win32"):
         with patch(
-            "akidocs_core.cli.os.startfile", side_effect=OSError("No application")
+            "akidocs_core.cli.os.startfile",
+            side_effect=OSError("No application"),
+            create=True,
         ):
             result = open_file(Path("test.pdf"))
             assert result is False
