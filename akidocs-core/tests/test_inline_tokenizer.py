@@ -13,14 +13,14 @@ def test_plain_text():
 
 def test_italic_only():
     result = tokenize_inline("*hello*")
-    assert result == [InlineText(content="hello", styles=frozenset({Italic()}))]
+    assert result == [InlineText(content="hello", styles=ITALIC)]
 
 
 def test_text_then_italic():
     result = tokenize_inline("hello *world*")
     assert result == [
         InlineText(content="hello "),
-        InlineText(content="world", styles=frozenset({Italic()})),
+        InlineText(content="world", styles=ITALIC),
     ]
 
 
@@ -33,7 +33,7 @@ def test_text_then_bold():
     result = tokenize_inline("hello **world**")
     assert result == [
         InlineText(content="hello "),
-        InlineText(content="world", styles=frozenset({Bold()})),
+        InlineText(content="world", styles=BOLD),
     ]
 
 
