@@ -35,7 +35,7 @@ uv tool install git+https://github.com/AkiPoh/akidocs.git@v0.1.0-alpha#subdirect
 #### What's New Internally
 - Considerable refacors throughout codebase
 - Styles now have their own module `styles.py` with dataclass from `style_base.py`
-- Styles now have margins
+- Styles now have configuration for edge margins and base font style
 
 ### Akidocs - v0.1.0-alpha / 0.1.0a0 - 2025-12-26
 #### What's New
