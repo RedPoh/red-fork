@@ -15,16 +15,22 @@ def run_cli(*args, env=None):
     )
 
 
-def test_cli_produces_pdf(tmp_path):
+def run_cli_with_files(tmp_path, *extra_args, env=None):
     input_file = tmp_path / "test.md"
     output_file = tmp_path / "test.pdf"
     input_file.write_text("# Hello\n\nWorld")
 
-    result = run_cli(str(input_file), str(output_file))
+    result = run_cli(str(input_file), str(output_file), *extra_args, env=env)
 
     assert result.returncode == 0
     assert output_file.exists()
     assert output_file.stat().st_size > 0
+
+    return result
+
+
+def test_cli_produces_pdf(tmp_path):
+    run_cli_with_files(tmp_path)
 
 
 def test_cli_version_long_flag():
