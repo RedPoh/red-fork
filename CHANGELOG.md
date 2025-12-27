@@ -37,6 +37,7 @@ uv tool install git+https://github.com/AkiPoh/akidocs.git@v0.1.0-alpha#subdirect
     - `regard` (r) — monospace, bold, enormous margins
 - CLI now shows conversion info on generation, for example: `From input.md (Helvetica, generic) to output.pdf`
 - Added CHANGELOG.md for tracking version history in repository
+- Added Technical Overview to README.md
 
 #### What's New Internally
 - Considerable refactors throughout codebase

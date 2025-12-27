@@ -73,7 +73,7 @@ def _find_styled_section(
 
 
 def tokenize_inline(
-    text: str, inherited_styles: frozenset[Style] = frozenset()
+    text: str, inherited_styles: frozenset[InlineStyle] = frozenset()
 ) -> list[InlineText]:
     tokens: list[InlineText] = []
     text_buffer = ""

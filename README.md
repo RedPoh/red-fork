@@ -81,10 +81,10 @@ aki input.md output.pdf -o
 # Convert and open in default application
 # with chosen style, available: generic / g,
 # times / t, regard / r
-aki input.md output.pdf --style modern  # or:
-aki input.md output.pdf --style m  # or:
-aki input.md output.pdf -s modern  #or:
-aki input.md output.pdf -s m
+aki input.md output.pdf --style regard  # or:
+aki input.md output.pdf --style r  # or:
+aki input.md output.pdf -s regard  #or:
+aki input.md output.pdf -s r
 
 # If output.pdf exists, you'll be prompted:
 #   output.pdf already exists. Overwrite? [y/N]
