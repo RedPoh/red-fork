@@ -26,8 +26,30 @@ Takes in a Markdown file, parses it, and outputs it as a PDF
   - `-n` or `--non-interactive` to error instead of prompting when output file exists
   - `-f` or `--force` to overwrite output file without prompting
 
+## Technical Overview
+**Stack**
+- Python 3.14
+- uv for package and dependency management
+- fpdf2 for PDF generation
+- pytest for testing
+- akidocs-core (this package)
+
+**Understanding the codebase**
+
+The entry point lives in [cli.py](./akidocs-core/src/akidocs_core/cli.py), and that's a good place to get started with understanding this project. Here's the core flow as a snippet from there:
+```python
+text = input_path.read_text(encoding="utf-8")
+tokens = tokenize(text)
+pdf_bytes = render_pdf(tokens, style)
+output_path.write_bytes(pdf_bytes)
+```
+
+The internal flow goes something like this: read the markdown, tokenize it into blocks (like headings and paragraphs), then tokenize the raw text within those blocks to inline tokens (like normal text, bold and italic), then render it with the selected style to PDF with fpdf2, and finally write to disk.
+
+Development is TDD-based - see [tests/](./akidocs-core/tests) for how features are specified and verified.
+
 ## Prerequisites
-**Requires uv**, if not installed follow https://docs.astral.sh/uv/getting-started/installation/
+**Requires uv**, if not installed follow https://docs.astral.sh/uv/getting-started/installation/. In the following steps uv will automatically install the correct version of Python; you do not need to install Python manually.
 
 ## Install
 Akidocs is available from GitHub (https://github.com/AkiPoh/akidocs), with releases available from GitHub Releases (https://github.com/AkiPoh/akidocs/releases).
