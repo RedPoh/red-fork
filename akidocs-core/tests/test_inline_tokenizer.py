@@ -39,37 +39,33 @@ def test_text_then_bold():
 
 def test_bold_italic():
     result = tokenize_inline("***hello***")
-    assert len(result) == 1
-    assert result[0].content == "hello"
-    assert Bold() in result[0].styles
-    assert Italic() in result[0].styles
+    assert result == [InlineText(content="hello", styles=BOLD_ITALIC)]
 
 
 def test_bold_containing_italic():
     result = tokenize_inline("**bold *and italic* text**")
-    assert len(result) == 3
-    assert result[0] == InlineText(content="bold ", styles=frozenset({Bold()}))
-    assert result[1] == InlineText(
-        content="and italic", styles=frozenset({Bold(), Italic()})
-    )
-    assert result[2] == InlineText(content=" text", styles=frozenset({Bold()}))
+    assert result == [
+        InlineText(content="bold ", styles=BOLD),
+        InlineText(content="and italic", styles=BOLD_ITALIC),
+        InlineText(content=" text", styles=BOLD),
+    ]
 
 
 def test_italic_containing_bold():
     result = tokenize_inline("*italic **and bold** text*")
-    assert len(result) == 3
-    assert result[0] == InlineText(content="italic ", styles=frozenset({Italic()}))
-    assert result[1] == InlineText(
-        content="and bold", styles=frozenset({Italic(), Bold()})
-    )
-    assert result[2] == InlineText(content=" text", styles=frozenset({Italic()}))
+    assert result == [
+        InlineText(content="italic ", styles=ITALIC),
+        InlineText(content="and bold", styles=BOLD_ITALIC),
+        InlineText(content=" text", styles=ITALIC),
+    ]
 
 
 def test_adjacent_styles():
     result = tokenize_inline("**bold***italic*")
-    assert len(result) == 2
-    assert result[0] == InlineText(content="bold", styles=frozenset({Bold()}))
-    assert result[1] == InlineText(content="italic", styles=frozenset({Italic()}))
+    assert result == [
+        InlineText(content="bold", styles=BOLD),
+        InlineText(content="italic", styles=ITALIC),
+    ]
 
 
 def test_unclosed_bold():
