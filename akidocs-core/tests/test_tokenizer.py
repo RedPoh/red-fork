@@ -47,7 +47,7 @@ def test_header_levels():
     assert tokenize("###### Six")[0].level == 6
 
 
-def test_windows_line_endings():
+def test_windows_crlf_line_endings():
     result = tokenize("First paragraph\r\n\r\nSecond paragraph")
     assert len(result) == 2
     assert result[0].content == [InlineText(content="First paragraph")]
