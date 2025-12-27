@@ -201,3 +201,83 @@ def test_non_interactive_short_flag(tmp_path):
 
     assert result.returncode != 0
     assert "exists" in result.stdout.lower() or "exists" in result.stderr.lower()
+
+
+def test_force_overwrites_without_prompt(tmp_path):
+    """--force should overwrite without prompting."""
+    input_file = tmp_path / "test.md"
+    output_file = tmp_path / "test.pdf"
+    input_file.write_text("# Hello")
+    output_file.write_text("existing content")
+
+    result = subprocess.run(
+        [
+            "uv",
+            "run",
+            "python",
+            "-m",
+            "akidocs_core",
+            str(input_file),
+            str(output_file),
+            "--force",
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0
+    assert "[y/n]" not in result.stdout.lower()  # no prompt
+    assert output_file.read_bytes() != b"existing content"
+
+
+def test_force_short_flag(tmp_path):
+    """Short flag -f should work same as --force."""
+    input_file = tmp_path / "test.md"
+    output_file = tmp_path / "test.pdf"
+    input_file.write_text("# Hello")
+    output_file.write_text("existing content")
+
+    result = subprocess.run(
+        [
+            "uv",
+            "run",
+            "python",
+            "-m",
+            "akidocs_core",
+            str(input_file),
+            str(output_file),
+            "-f",
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0
+    assert output_file.read_bytes() != b"existing content"
+
+
+def test_force_overrides_non_interactive(tmp_path):
+    """--force should override --non-interactive and succeed."""
+    input_file = tmp_path / "test.md"
+    output_file = tmp_path / "test.pdf"
+    input_file.write_text("# Hello")
+    output_file.write_text("existing content")
+
+    result = subprocess.run(
+        [
+            "uv",
+            "run",
+            "python",
+            "-m",
+            "akidocs_core",
+            str(input_file),
+            str(output_file),
+            "-n",
+            "-f",
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0
+    assert output_file.read_bytes() != b"existing content"
