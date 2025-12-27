@@ -57,17 +57,17 @@ def main():
     output_path = Path(args.output)
 
     if not input_path.exists():
-        print(f"Error: File not found: {input_path}")
+        print(f"Error: File not found: {input_path}", file=sys.stderr)
         sys.exit(1)
 
     if output_path.exists() and not args.force:
         if args.non_interactive:
-            print(f"Error: {output_path} already exists")
+            print(f"Error: {output_path} already exists", file=sys.stderr)
             sys.exit(1)
         else:
             response = input(f"{output_path} already exists. Overwrite? [y/N] ")
             if response.lower() != "y":
-                print(f"Aborted: {output_path} already exists")
+                print(f"Aborted: {output_path} already exists", file=sys.stderr)
                 sys.exit(1)
 
     style = STYLES[args.style]

@@ -135,7 +135,7 @@ def test_non_interactive_errors_on_existing_file(overwrite_files):
     result = run_cli(str(input_file), str(output_file), "--non-interactive")
 
     assert result.returncode != 0
-    assert "exists" in result.stdout.lower() or "exists" in result.stderr.lower()
+    assert "exists" in result.stderr.lower()
     assert output_file.read_bytes() == original_content
 
 
@@ -146,7 +146,7 @@ def test_non_interactive_short_flag(overwrite_files):
     result = run_cli(str(input_file), str(output_file), "-n")
 
     assert result.returncode != 0
-    assert "exists" in result.stdout.lower() or "exists" in result.stderr.lower()
+    assert "exists" in result.stderr.lower()
 
 
 def test_force_overwrites_without_prompt(overwrite_files):
