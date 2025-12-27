@@ -12,7 +12,7 @@ def _find_closing(text: str, delim: str, start: int) -> int:
     i = start
     while i < len(text):
         if text[i : i + len(delim)] == delim:
-            longer_valid = False
+            claimed_by_longer = False
             for check_delim, _ in DELIMITERS:
                 if len(check_delim) <= len(delim):
                     continue
@@ -20,13 +20,13 @@ def _find_closing(text: str, delim: str, start: int) -> int:
                     continue
                 close = _find_closing(text, check_delim, i + len(check_delim))
                 if close != -1:
-                    longer_valid = True
+                    claimed_by_longer = True
                     break
 
-            if not longer_valid:
+            if not claimed_by_longer:
                 return i
 
-        skipped = False
+        skipped_nested_section = False
         for check_delim, _ in DELIMITERS:
             if check_delim == delim:
                 continue
@@ -36,10 +36,10 @@ def _find_closing(text: str, delim: str, start: int) -> int:
             close = _find_closing(text, check_delim, i + len(check_delim))
             if close != -1:
                 i = close + len(check_delim)
-                skipped = True
+                skipped_nested_section = True
                 break
 
-        if not skipped:
+        if not skipped_nested_section:
             i += 1
 
     return -1
@@ -49,12 +49,12 @@ def tokenize_inline(
     text: str, inherited_styles: frozenset[Style] = frozenset()
 ) -> list[InlineText]:
     tokens: list[InlineText] = []
-    current = ""
+    text_buffer = ""
     i = 0
 
     while i < len(text):
-        matched = False
-        longest_failed = 0
+        found_delimiter = False
+        failed_opening_len = 0
 
         for delim, styles in DELIMITERS:
             if text[i : i + len(delim)] != delim:
@@ -62,16 +62,16 @@ def tokenize_inline(
 
             end = _find_closing(text, delim, i + len(delim))
             if end == -1:
-                longest_failed = max(longest_failed, len(delim))
+                failed_opening_len = max(failed_opening_len, len(delim))
                 continue
 
             # Reject if closer is within the range a longer delimiter claimed
-            if end + len(delim) <= i + longest_failed:
+            if end + len(delim) <= i + failed_opening_len:
                 continue
 
-            if current:
-                tokens.append(InlineText(content=current, styles=inherited_styles))
-                current = ""
+            if text_buffer:
+                tokens.append(InlineText(content=text_buffer, styles=inherited_styles))
+                text_buffer = ""
 
             inner_content = text[i + len(delim) : end]
             combined_styles = inherited_styles | styles
@@ -83,14 +83,14 @@ def tokenize_inline(
                 tokens.append(InlineText(content="", styles=combined_styles))
 
             i = end + len(delim)
-            matched = True
+            found_delimiter = True
             break
 
-        if not matched:
-            current += text[i]
+        if not found_delimiter:
+            text_buffer += text[i]
             i += 1
 
-    if current:
-        tokens.append(InlineText(content=current, styles=inherited_styles))
+    if text_buffer:
+        tokens.append(InlineText(content=text_buffer, styles=inherited_styles))
 
     return tokens
