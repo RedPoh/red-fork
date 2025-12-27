@@ -2,6 +2,8 @@ import subprocess
 from pathlib import Path
 from unittest.mock import patch
 
+import pytest
+
 from akidocs_core.opener import open_file
 
 
@@ -13,19 +15,18 @@ def test_open_file_windows():
             assert result is True
 
 
-def test_open_file_macos():
-    with patch("akidocs_core.opener.sys.platform", "darwin"):
+@pytest.mark.parametrize(
+    "platform,command",
+    [
+        ("darwin", "open"),
+        ("linux", "xdg-open"),
+    ],
+)
+def test_open_file_unix(platform, command):
+    with patch("akidocs_core.opener.sys.platform", platform):
         with patch("akidocs_core.opener.subprocess.run") as mock_run:
             result = open_file(Path("test.pdf"))
-            mock_run.assert_called_once_with(["open", Path("test.pdf")], check=True)
-            assert result is True
-
-
-def test_open_file_linux():
-    with patch("akidocs_core.opener.sys.platform", "linux"):
-        with patch("akidocs_core.opener.subprocess.run") as mock_run:
-            result = open_file(Path("test.pdf"))
-            mock_run.assert_called_once_with(["xdg-open", Path("test.pdf")], check=True)
+            mock_run.assert_called_once_with([command, Path("test.pdf")], check=True)
             assert result is True
 
 
