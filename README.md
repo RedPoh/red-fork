@@ -19,6 +19,10 @@ Takes in a Markdown file, parses it, and outputs it as a PDF
   - `-h` or `--help` for help information
   - `-v` or `--version` for version information
   - `-o` or `--open` to open the PDF after creation
+  - `-s` or `--style` to select document style, for example `--style generic`
+    - `generic` (g) — balanced serif style, default
+    - `modern` (m) — clean sans-serif, generous spacing
+    - `regard` (r) — monospace, bold, enormous margins
 
 ## Prerequisites
 **Requires uv**, if not installed follow https://docs.astral.sh/uv/getting-started/installation/
@@ -36,8 +40,17 @@ Go to GitHub Releases (https://github.com/AkiPoh/akidocs/releases) and follow th
 aki input.md output.pdf
 
 # Convert and open in default application
+# with default style (generic)
 aki input.md output.pdf --open  # or:
 aki input.md output.pdf -o
+
+# Convert and open in default application
+# with chosen style, available: generic / g,
+# modern / m, regard / r
+aki input.md output.pdf --style modern  # or:
+aki input.md output.pdf --style m  # or:
+aki input.md output.pdf -s modern  #or:
+aki input.md output.pdf -s m
 
 # Show help
 aki --help  # or:

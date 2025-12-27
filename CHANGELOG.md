@@ -25,6 +25,13 @@ Then in PowerShell:
 uv tool install git+https://github.com/AkiPoh/akidocs.git@v0.1.0-alpha#subdirectory=akidocs-core
 ```
 
+### Akidocs - 0.2.0.dev0 - UNDER DEVELOPMENT
+#### What's New
+- `-s` or `--style` to select document style, for example `--style generic`
+  - `generic` (g) — balanced serif style, default
+  - `modern` (m) — clean sans-serif, generous spacing
+  - `regard` (r) — monospace, bold, enormous margins
+
 ### Akidocs - v0.1.0-alpha / 0.1.0a0 - 2025-12-26
 #### What's New
 - Inline text formatting
