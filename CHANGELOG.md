@@ -35,7 +35,8 @@ uv tool install git+https://github.com/AkiPoh/akidocs.git@v0.1.0-alpha#subdirect
     - `generic` (g) — clean sans-serif, default
     - `times` (t) — balanced serif style
     - `regard` (r) — monospace, bold, enormous margins
-- Added CHANGELOG.md for tracking version history
+- CLI now shows conversion info on generation, for example: `From input.md (Helvetica, generic) to output.pdf`
+- Added CHANGELOG.md for tracking version history in repository
 
 #### What's New Internally
 - Considerable refactors throughout codebase
