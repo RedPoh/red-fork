@@ -1,7 +1,6 @@
 import os
 import subprocess
 from importlib.metadata import version
-from pathlib import Path
 
 import pytest
 
@@ -67,7 +66,7 @@ def test_cli_open_long_flag(tmp_path):
         "--open",
         env={**os.environ, "AKIDOCS_TEST_MODE": "1"},
     )
-    assert "open" in result.stdout.lower()
+    assert "opening" in result.stdout.lower()
 
 
 def test_cli_open_short_flag(tmp_path):
@@ -76,7 +75,7 @@ def test_cli_open_short_flag(tmp_path):
         "-o",
         env={**os.environ, "AKIDOCS_TEST_MODE": "1"},
     )
-    assert "open" in result.stdout.lower()
+    assert "opening" in result.stdout.lower()
 
 
 @pytest.mark.parametrize(
