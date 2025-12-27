@@ -22,3 +22,7 @@ class Style:
     paragraph_line_height_factor: float
     header_margin_after: float
     paragraph_margin_after: float
+    page_margin_top: float
+    page_margin_right: float
+    page_margin_bottom: float
+    page_margin_left: float

@@ -50,6 +50,10 @@ def _render_paragraph(pdf: FPDF, content: list[InlineText], style: Style) -> Non
 
 def render_pdf(tokens: list[Token], style: Style = GENERIC) -> bytes:
     pdf = FPDF()
+    pdf.set_margins(
+        style.page_margin_left, style.page_margin_top, style.page_margin_right
+    )
+    pdf.set_auto_page_break(auto=True, margin=style.page_margin_bottom)
     pdf.add_page()
 
     for token in tokens:

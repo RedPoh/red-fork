@@ -17,6 +17,10 @@ GENERIC = Style(
     paragraph_line_height_factor=1.4,
     header_margin_after=pt(8),
     paragraph_margin_after=pt(4),
+    page_margin_top=25.4,
+    page_margin_right=25.4,
+    page_margin_bottom=25.4,
+    page_margin_left=25.4,
 )
 
 MODERN = Style(
@@ -34,10 +38,14 @@ MODERN = Style(
     paragraph_line_height_factor=1.6,
     header_margin_after=pt(12),
     paragraph_margin_after=pt(8),
+    page_margin_top=20.0,
+    page_margin_right=25.0,
+    page_margin_bottom=20.0,
+    page_margin_left=25.0,
 )
 
 REGARD = Style(
-    font_family="Courier",
+    font_family="Helvetica",
     base_font_size=pt(12),
     header_font_sizes={
         1: pt(14),
@@ -51,6 +59,10 @@ REGARD = Style(
     paragraph_line_height_factor=2.0,
     header_margin_after=pt(16),
     paragraph_margin_after=pt(16),
+    page_margin_top=60.0,
+    page_margin_right=50.0,
+    page_margin_bottom=60.0,
+    page_margin_left=50.0,
 )
 
 STYLES = {
