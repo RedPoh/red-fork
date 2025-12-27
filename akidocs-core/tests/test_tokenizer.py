@@ -1,6 +1,8 @@
 from akidocs_core.tokenizer import tokenize
 from akidocs_core.tokens import Header, InlineText, Italic, Paragraph
 
+ITALIC = frozenset({Italic()})
+
 
 def test_empty_string_returns_empty_list():
     assert tokenize("") == []
@@ -40,6 +42,9 @@ def test_header_levels():
     assert tokenize("# One")[0].level == 1
     assert tokenize("## Two")[0].level == 2
     assert tokenize("### Three")[0].level == 3
+    assert tokenize("#### Four")[0].level == 4
+    assert tokenize("##### Five")[0].level == 5
+    assert tokenize("###### Six")[0].level == 6
 
 
 def test_windows_line_endings():
@@ -97,5 +102,5 @@ def test_paragraph_with_italic():
     assert isinstance(result[0], Paragraph)
     assert result[0].content == [
         InlineText(content="hello "),
-        InlineText(content="world", styles=frozenset({Italic()})),
+        InlineText(content="world", styles=ITALIC),
     ]
