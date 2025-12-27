@@ -18,21 +18,9 @@ def run_cli(*args, env=None):
 def test_cli_produces_pdf(tmp_path):
     input_file = tmp_path / "test.md"
     output_file = tmp_path / "test.pdf"
-
     input_file.write_text("# Hello\n\nWorld")
 
-    result = subprocess.run(
-        [
-            "uv",
-            "run",
-            "python",
-            "-m",
-            "akidocs_core",
-            str(input_file),
-            str(output_file),
-        ],
-        capture_output=True,
-    )
+    result = run_cli(str(input_file), str(output_file))
 
     assert result.returncode == 0
     assert output_file.exists()
@@ -71,21 +59,14 @@ def test_cli_open_long_flag(tmp_path):
     input_file = tmp_path / "test.md"
     output_file = tmp_path / "test.pdf"
     input_file.write_text("# Hello\n\nWorld")
-    result = subprocess.run(
-        [
-            "uv",
-            "run",
-            "python",
-            "-m",
-            "akidocs_core",
-            str(input_file),
-            str(output_file),
-            "--open",
-        ],
-        capture_output=True,
-        text=True,
+
+    result = run_cli(
+        str(input_file),
+        str(output_file),
+        "--open",
         env={**os.environ, "AKIDOCS_TEST_MODE": "1"},
     )
+
     assert result.returncode == 0
     assert output_file.exists()
     assert output_file.stat().st_size > 0
@@ -96,21 +77,14 @@ def test_cli_open_short_flag(tmp_path):
     input_file = tmp_path / "test.md"
     output_file = tmp_path / "test.pdf"
     input_file.write_text("# Hello\n\nWorld")
-    result = subprocess.run(
-        [
-            "uv",
-            "run",
-            "python",
-            "-m",
-            "akidocs_core",
-            str(input_file),
-            str(output_file),
-            "-o",
-        ],
-        capture_output=True,
-        text=True,
+
+    result = run_cli(
+        str(input_file),
+        str(output_file),
+        "-o",
         env={**os.environ, "AKIDOCS_TEST_MODE": "1"},
     )
+
     assert result.returncode == 0
     assert output_file.exists()
     assert output_file.stat().st_size > 0
@@ -135,21 +109,7 @@ def test_cli_style(tmp_path, flag, style):
     output_file = tmp_path / "test.pdf"
     input_file.write_text("# Hello\n\nWorld")
 
-    result = subprocess.run(
-        [
-            "uv",
-            "run",
-            "python",
-            "-m",
-            "akidocs_core",
-            str(input_file),
-            str(output_file),
-            flag,
-            style,
-        ],
-        capture_output=True,
-        text=True,
-    )
+    result = run_cli(str(input_file), str(output_file), flag, style)
 
     assert result.returncode == 0
     assert output_file.exists()
