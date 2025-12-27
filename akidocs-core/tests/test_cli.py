@@ -29,6 +29,15 @@ def run_cli_with_files(tmp_path, *extra_args, env=None):
     return result
 
 
+@pytest.fixture
+def overwrite_files(tmp_path):
+    input_file = tmp_path / "test.md"
+    output_file = tmp_path / "test.pdf"
+    input_file.write_text("# Hello")
+    output_file.write_text("existing content")
+    return input_file, output_file
+
+
 def test_cli_produces_pdf(tmp_path):
     run_cli_with_files(tmp_path)
 
@@ -166,12 +175,8 @@ def test_force_overwrites_without_prompt(tmp_path):
     assert output_file.read_bytes() != b"existing content"
 
 
-def test_force_short_flag(tmp_path):
-    """Short flag -f should work same as --force."""
-    input_file = tmp_path / "test.md"
-    output_file = tmp_path / "test.pdf"
-    input_file.write_text("# Hello")
-    output_file.write_text("existing content")
+def test_force_short_flag(overwrite_files):
+    input_file, output_file = overwrite_files
 
     result = run_cli(str(input_file), str(output_file), "-f")
 
