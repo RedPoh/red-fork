@@ -17,8 +17,7 @@ def assert_valid_pdf_bytes(result: bytes) -> None:
 def test_render_returns_bytes():
     tokens = [Paragraph(content=[InlineText(content="Hello")])]
     result = render_pdf(tokens)
-    assert isinstance(result, bytes)
-    assert len(result) > 0
+    assert_valid_pdf_bytes(result)
 
 
 def test_render_handles_headers():
