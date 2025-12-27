@@ -5,12 +5,13 @@ from importlib.metadata import version
 import pytest
 
 
-def run_cli(*args, env=None):
+def run_cli(*args, env=None, input=None):
     return subprocess.run(
         ["uv", "run", "python", "-m", "akidocs_core", *args],
         capture_output=True,
         text=True,
         env=env,
+        input=input,
     )
 
 
@@ -103,23 +104,10 @@ def test_overwrite_prompt_decline(tmp_path):
     output_file.write_text("existing content")
     original_content = output_file.read_bytes()
 
-    result = subprocess.run(
-        [
-            "uv",
-            "run",
-            "python",
-            "-m",
-            "akidocs_core",
-            str(input_file),
-            str(output_file),
-        ],
-        capture_output=True,
-        text=True,
-        input="n\n",
-    )
+    result = run_cli(str(input_file), str(output_file), input="n\n")
 
     assert result.returncode != 0
-    assert output_file.read_bytes() == original_content  # unchanged
+    assert output_file.read_bytes() == original_content
 
 
 def test_overwrite_prompt_accept(tmp_path):
