@@ -270,3 +270,53 @@ def test_cli_style_modern_alias(tmp_path):
 
     assert result.returncode == 0
     assert output_file.exists()
+
+
+def test_cli_style_fancy(tmp_path):
+    input_file = tmp_path / "test.md"
+    output_file = tmp_path / "test.pdf"
+    input_file.write_text("# Hello\n\nWorld")
+
+    result = subprocess.run(
+        [
+            "uv",
+            "run",
+            "python",
+            "-m",
+            "akidocs_core",
+            str(input_file),
+            str(output_file),
+            "-s",
+            "fancy",
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0
+    assert output_file.exists()
+
+
+def test_cli_style_fancy_alias(tmp_path):
+    input_file = tmp_path / "test.md"
+    output_file = tmp_path / "test.pdf"
+    input_file.write_text("# Hello\n\nWorld")
+
+    result = subprocess.run(
+        [
+            "uv",
+            "run",
+            "python",
+            "-m",
+            "akidocs_core",
+            str(input_file),
+            str(output_file),
+            "-s",
+            "f",
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0
+    assert output_file.exists()
