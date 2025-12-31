@@ -1,5 +1,11 @@
-use crate::tokens::Token;
+use crate::tokens::{Paragraph, Token};
 
 pub fn tokenize(text: &str) -> Vec<Token> {
-    vec![]
+    if text.is_empty() {
+        return vec![];
+    }
+
+    vec![Token::Paragraph(Paragraph {
+        content: String::from(text),
+    })]
 }
