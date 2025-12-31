@@ -1,5 +1,5 @@
 use akidocs_core_rs::tokenizer::tokenize;
-use akidocs_core_rs::tokens::{Paragraph, Token};
+use akidocs_core_rs::tokens::{Header, Paragraph, Token};
 
 #[test]
 fn test_empty_string_returns_empty_list() {
@@ -91,5 +91,17 @@ fn test_windows_crlf_line_endings() {
                 content: String::from("Second paragraph")
             }),
         ]
+    );
+}
+
+#[test]
+fn test_header_level_one() {
+    let result = tokenize("# Hello");
+    assert_eq!(
+        result,
+        vec![Token::Header(Header {
+            level: 1,
+            content: String::from("Hello")
+        }),]
     );
 }
