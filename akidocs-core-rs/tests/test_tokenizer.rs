@@ -16,3 +16,10 @@ fn test_plain_paragraph() {
         })]
     );
 }
+
+#[test]
+fn test_whitespace_only_returns_empty_list() {
+    assert_eq!(tokenize("   "), vec![]);
+    assert_eq!(tokenize("\n\n"), vec![]);
+    assert_eq!(tokenize("  \n\n  "), vec![]);
+}
